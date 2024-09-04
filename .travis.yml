@@ -1,0 +1,5 @@
+os: linux
+arch: s390x  # Specify the architecture for s390x
+dist: focal  # Specify the Linux distribution
+script:
+  - echo "test"  # Replace with actual build script
