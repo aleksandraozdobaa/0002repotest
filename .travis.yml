@@ -1,5 +1,31 @@
 os: linux
-arch: s390x  # Specify the architecture for s390x
-dist: focal  # Specify the Linux distribution
-script:
-  - echo "test"  # Replace with actual build script
+dist: focal
+language: go
+go:
+  - 1.7.x
+jobs:
+  include: 
+  - name: “test123” # existing functionality
+    script: # existing functionality
+      - java -version
+  - name: “sbom go”
+    script: # existing functionality
+      - java -version
+    addons:
+      sbom:
+        on:
+          branch: 'main'
+          pr: false
+        # condition: false
+        run_phase: "after_success"
+        output_format: "cyclonedx-json"
+        output_dir: "/testggoutput"
+        input_dir: "/testGO"
+      deploy:
+        provider: releases
+        edge: true
+        file_glob: true
+        file: testggoutput/**/*
+        skip_cleanup: true
+        on:
+         branch: main
